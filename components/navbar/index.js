@@ -6,10 +6,8 @@ const Navbar = () => {
 
   const { data, error } = useSWR('/api/getCategories', fetcher);
 
-  console.log(data)
-
   return (
-    <div>
+    <div className='navbar-container'>
       <Nav vertical>
         {
           data && data.map((item) => (
@@ -19,6 +17,13 @@ const Navbar = () => {
           ))
         }
       </Nav>
+
+      <style jsx>{`
+        .navbar-container {
+          width: 200px;
+          background-color: #ebeae8;
+        }
+      `}</style>
     </div>
   );
 }

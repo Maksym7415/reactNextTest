@@ -1,10 +1,10 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from '../components/navbar';
+import MainPage from '../components/main';
 
 export default function Home() {
   return (
     <div className='category'>
-     <Navbar/>
+     <MainPage />
     </div>
   )
 }

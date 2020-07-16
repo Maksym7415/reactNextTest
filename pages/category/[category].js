@@ -1,25 +1,45 @@
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import GoodCard from '../../components/category/goodCard';
-import Navbar from '../../components/navbar';
+import MainPage from '../../components/main';
 
-function Goods() {
+function Goods(props) {
   const router = useRouter();
   const { category } = router.query;
+  const {data} = props;
 
   return (
-    <div className='good-card-container'>
-      <Navbar/>
-      <GoodCard/>
+      <MainPage>
+        <div className='content'>
+          {
+            data && data.map((item) => (
+              <GoodCard
+                key={item.id}
+                image={`${category}-${item.id}`}
+                name={item.name}
+                description={item.description}
+                model={item.model}
+              />
+            ))
+          }
+        </div>
 
-      <style jsx>{`
-        .good-card-container {
-          display: flex;
-        }
-      `}</style>
-    </div>
+        <style jsx>{`
+          .content {
+            display: flex;
+            flex-wrap: wrap;
+          }
+        `}</style>
+      </MainPage>
   )
 }
 
-export default Goods
+
+export async function getServerSideProps({params}) {
+  const res = await fetch(`http://localhost:3000/api/post/getGoods/${params.category}`)
+  const data = await res.json()
+
+  return { props: { data } }
+}
+
+export default Goods;
